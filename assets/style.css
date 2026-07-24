@@ -1,0 +1,176 @@
+/* ======================================================
+   AI Resume Screening System - Professional Theme
+====================================================== */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Global */
+html, body, [class*="css"]{
+    font-family: 'Poppins', sans-serif;
+}
+
+.stApp{
+    background:#F5F7FB;
+}
+
+/* Remove default top padding */
+.block-container{
+    padding-top:2rem;
+    padding-bottom:2rem;
+    padding-left:3rem;
+    padding-right:3rem;
+}
+
+/* Headings */
+h1{
+    font-weight:700;
+}
+
+h2,h3{
+    font-weight:600;
+    color:#1F2937;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"]{
+    background:#FFFFFF;
+    border-right:1px solid #E5E7EB;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3{
+    color:#174EA6;
+}
+
+/* Radio */
+.stRadio{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+/* File Uploader */
+[data-testid="stFileUploader"]{
+    background:white;
+    border:2px dashed #3B82F6;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+/* Text Area */
+.stTextArea{
+    background:white;
+    border-radius:15px;
+    padding:10px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+textarea{
+    border-radius:12px !important;
+}
+
+/* Buttons */
+.stButton>button{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    background:linear-gradient(90deg,#2563EB,#4F46E5);
+    color:white;
+    font-weight:600;
+    font-size:17px;
+    transition:.25s;
+}
+
+.stButton>button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(37,99,235,.30);
+}
+
+/* Download Button */
+.stDownloadButton>button{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    background:#16A34A;
+    color:white;
+    font-weight:600;
+}
+
+.stDownloadButton>button:hover{
+    background:#15803D;
+}
+
+/* Metric Cards */
+[data-testid="metric-container"]{
+    background:white;
+    border-radius:18px;
+    padding:18px;
+    border-left:5px solid #2563EB;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+/* DataFrame */
+[data-testid="stDataFrame"]{
+    background:white;
+    border-radius:15px;
+    padding:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+/* Plotly Charts */
+.js-plotly-plot{
+    background:white;
+    border-radius:18px;
+    padding:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+/* Alerts */
+.stSuccess,
+.stInfo,
+.stWarning,
+.stError{
+    border-radius:12px;
+}
+
+/* Progress Bar */
+.stProgress>div>div{
+    border-radius:20px;
+}
+
+/* Horizontal Line */
+hr{
+    margin-top:25px;
+    margin-bottom:25px;
+}
+
+/* Expander */
+.streamlit-expanderHeader{
+    font-weight:600;
+}
+
+/* Tables */
+table{
+    border-radius:10px;
+    overflow:hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#2563EB;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#E5E7EB;
+}
