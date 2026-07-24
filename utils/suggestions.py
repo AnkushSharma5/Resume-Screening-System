@@ -25,7 +25,7 @@ def generate_suggestions(result):
         )
 
     # Overall Score
-    if result["overall_score"] < 80:
+    if result["score"] < 80:
         suggestions.append(
             "Add more projects and achievements related to this role."
         )

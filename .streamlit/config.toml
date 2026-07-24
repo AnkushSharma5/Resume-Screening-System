@@ -1,12 +1,12 @@
 [theme]
-base = "light"
+base = "dark"
 
-primaryColor = "#2563eb"
+primaryColor = "#6366F1"
 
-backgroundColor = "#f5f7fa"
+backgroundColor = "#0B0F1A"
 
-secondaryBackgroundColor = "#ffffff"
+secondaryBackgroundColor = "#131825"
 
-textColor = "#262730"
+textColor = "#E2E8F0"
 
 font = "sans serif"

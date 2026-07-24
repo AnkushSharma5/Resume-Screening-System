@@ -1,13 +1,17 @@
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
+import io
 
 
-def generate_report(result, output_path):
+def generate_report(result):
     """
     Generate ATS Resume Analysis Report.
+    Returns PDF bytes.
     """
 
-    doc = SimpleDocTemplate(output_path)
+    buffer = io.BytesIO()
+
+    doc = SimpleDocTemplate(buffer)
 
     styles = getSampleStyleSheet()
 
@@ -19,7 +23,7 @@ def generate_report(result, output_path):
 
     elements.append(
         Paragraph(
-            f"<b>Overall Score:</b> {result['overall_score']}%",
+            f"<b>Overall Score:</b> {result['score']}%",
             styles["Normal"]
         )
     )
@@ -67,3 +71,6 @@ def generate_report(result, output_path):
         )
 
     doc.build(elements)
+
+    buffer.seek(0)
+    return buffer.getvalue()
