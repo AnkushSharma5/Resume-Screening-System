@@ -5,7 +5,8 @@ plotly==5.24.1
 scikit-learn
 PyPDF2
 python-docx
-pdfplumbernltk
+pdfplumber
+nltk
 spacy
 nltk
 spacy==3.7.5
