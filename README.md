@@ -1,141 +1,122 @@
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="110"/>
-
 # 🤖 AI Resume Screening System
 
 ### Intelligent ATS-Based Resume Analyzer & Candidate Ranking Platform
 
-<p align="center">
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
 
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-<img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/>
-<img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
-<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white"/>
-<img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white"/>
-<img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white"/>
-
-</p>
-
-<p align="center">
-
-<a href="https://YOUR-STREAMLIT-APP.streamlit.app">
-<img src="https://img.shields.io/badge/🚀%20Live%20Demo-Open-success?style=for-the-badge"/>
-</a>
-
-</p>
-
-### 📌 ATS Scoring • Resume Ranking • Skill Matching • AI Suggestions
-
-> An AI-powered Resume Screening System that analyzes resumes against job descriptions, calculates ATS compatibility scores, ranks candidates, identifies missing skills, and generates personalized improvement suggestions.
-
-</div>
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Open-success?style=for-the-badge)](https://YOUR-STREAMLIT-APP.streamlit.app)
 
 ---
+### 📌 ATS Scoring • Resume Ranking • Skill Matching • AI Suggestions
+
+> An AI-powered Resume Screening System that analyzes resumes against
+> job descriptions, calculates ATS compatibility scores, ranks
+> candidates, identifies missing skills, and generates personalized
+> improvement suggestions.
+:::
+
+------------------------------------------------------------------------
 
 # 📖 Overview
 
-The **AI Resume Screening System** is a smart recruitment assistant that automates resume evaluation using ATS-inspired scoring techniques.
+The **AI Resume Screening System** is an AI-powered recruitment
+assistant that automates resume evaluation using ATS-inspired scoring
+techniques.
 
-It extracts resume content, compares it with a Job Description, identifies matching and missing skills, ranks multiple resumes, and provides actionable suggestions to improve resume quality.
+The application extracts resume content from PDF files, compares it with
+a given Job Description, calculates ATS compatibility scores, identifies
+matched and missing skills, ranks multiple candidates, and generates
+personalized suggestions to improve resume quality.
 
-The application is built using **Python**, **Streamlit**, and **Machine Learning** libraries with an interactive dashboard powered by **Plotly**.
+With interactive visualizations and automated candidate ranking, the
+system enables recruiters to efficiently shortlist the most suitable
+candidates while helping job seekers optimize their resumes.
 
----
+------------------------------------------------------------------------
 
 # ✨ Features
 
 ### 📄 Single Resume Analysis
 
-- ATS Compatibility Score
-- Resume Parsing (PDF)
-- Job Description Matching
-- Skill Extraction
-- Missing Skill Identification
-- Personalized Improvement Suggestions
-
----
+-   ATS Compatibility Score
+-   Resume Parsing (PDF)
+-   Job Description Matching
+-   Skill Extraction
+-   Missing Skill Identification
+-   Personalized AI Suggestions
 
 ### 🏆 Multiple Resume Ranking
 
-- Upload Multiple Resumes
-- Automatic Candidate Ranking
-- ATS Score Comparison
-- Best Candidate Identification
-- Interactive Ranking Dashboard
-- Recruiter-Friendly Comparison
-
----
+-   Upload Multiple Resumes
+-   Automatic Candidate Ranking
+-   ATS Score Comparison
+-   Best Candidate Identification
+-   Recruiter-Friendly Candidate Comparison
 
 ### 📊 Interactive Dashboard
 
-- ATS Score Visualization
-- Resume Comparison Charts
-- Candidate Performance Analysis
-- Plotly Interactive Graphs
-- Skill Match Insights
-- Downloadable PDF Report
-
----
+-   ATS Score Visualization
+-   Resume Comparison Charts
+-   Interactive Plotly Graphs
+-   Downloadable PDF Report
 
 ### 🤖 AI-Powered Evaluation
 
-- Keyword Matching
-- Skill Gap Analysis
-- Resume Quality Assessment
-- Resume Strength Detection
-- Actionable Resume Recommendations
+-   Keyword Matching
+-   Skill Gap Analysis
+-   Resume Quality Assessment
+-   Resume Strength Detection
+-   Actionable Resume Recommendations
+
+------------------------------------------------------------------------
 
 # 🖼️ Screenshots
 
 ## 🏠 Home Page
 
-![Home](assets/home.png)
+![Home](screenshots/home.png)
 
----
+## 📄 Resume Analysis
 
-## 📄 Single Resume Analysis
+![Resume Analysis](screenshots/resume-analysis.png)
 
-![Single Resume](assets/single-analysis.png)
+## 🎯 Skills & AI Suggestions
 
----
+![Skills](screenshots/skills-suggestions.png)
 
-## 📊 Resume Ranking
+## 🏆 Multiple Resume Ranking
 
-![Ranking](assets/ranking.png)
+![Ranking](screenshots/resume-ranking.png)
 
----
+## 👑 Best Candidate Selection
 
-## 📈 Dashboard
+![Best Candidate](screenshots/best-candidate.png)
 
-![Dashboard](assets/dashboard.png)
-
----
-
-## 💡 AI Suggestions
-
-![Suggestions](assets/suggestions.png)
-
----
+------------------------------------------------------------------------
 
 # ⚙️ Tech Stack
 
-| Category | Technologies |
-|-----------|--------------|
-| Language | Python |
-| Framework | Streamlit |
-| Data Analysis | Pandas, NumPy |
-| Machine Learning | Scikit-learn |
-| Visualization | Plotly |
-| PDF Processing | PyPDF2 |
-| Styling | HTML, CSS |
-| Version Control | Git, GitHub |
+  Category           Technologies
+  ------------------ ---------------
+  Language           Python
+  Framework          Streamlit
+  Data Analysis      Pandas, NumPy
+  Machine Learning   Scikit-learn
+  Visualization      Plotly
+  PDF Processing     PyPDF2
+  Styling            HTML, CSS
+  Version Control    Git, GitHub
 
----
+------------------------------------------------------------------------
 
 # 🧠 Workflow
 
-```text
+``` text
 Resume Upload
       │
       ▼
@@ -150,33 +131,30 @@ Job Description Matching
       ▼
 ATS Score Calculation
       │
-      ▼
-Resume Suggestions
+      ├────────► Resume Suggestions
       │
       ▼
-Resume Ranking
+Multiple Resume Ranking
+      │
+      ▼
+Best Candidate Selection
 ```
 
----
+------------------------------------------------------------------------
 
 # 📁 Project Structure
 
-```text
+``` text
 Resume-Screening-System
-│
-├── assets/
-│   ├── style.css
+├── screenshots/
 │   ├── home.png
-│   ├── single-analysis.png
-│   ├── ranking.png
-│   ├── dashboard.png
-│   └── suggestions.png
-│
+│   ├── resume-analysis.png
+│   ├── skills-suggestions.png
+│   ├── resume-ranking.png
+│   └── best-candidate.png
+├── assets/
+│   └── style.css
 ├── utils/
-│   ├── ranking.py
-│   ├── report_generator.py
-│   ├── suggestions.py
-│
 ├── analyzer.py
 ├── app.py
 ├── requirements.txt
@@ -184,103 +162,81 @@ Resume-Screening-System
 └── .gitignore
 ```
 
----
+------------------------------------------------------------------------
 
 # 🚀 Installation
 
-### Clone the Repository
-
-```bash
+``` bash
 git clone https://github.com/AnkushSharma5/Resume-Screening-System.git
-```
-
-### Navigate to the Project
-
-```bash
 cd Resume-Screening-System
-```
-
-### Create a Virtual Environment
-
-```bash
 python -m venv venv
 ```
 
-### Activate the Environment
-
 **Windows**
 
-```bash
+``` bash
 venv\Scripts\activate
 ```
 
-**Linux / macOS**
+**Linux/macOS**
 
-```bash
+``` bash
 source venv/bin/activate
 ```
 
-### Install Dependencies
-
-```bash
+``` bash
 pip install -r requirements.txt
-```
-
-### Run the Application
-
-```bash
 streamlit run app.py
 ```
 
----
+------------------------------------------------------------------------
+
 # 📊 Core Functionalities
 
-- ✅ Single Resume ATS Analysis
-- ✅ Multiple Resume Ranking
-- ✅ Job Description Matching
-- ✅ Skill Extraction
-- ✅ Missing Skill Detection
-- ✅ ATS Compatibility Score
-- ✅ Candidate Comparison Dashboard
-- ✅ Interactive Plotly Visualizations
-- ✅ Personalized Resume Suggestions
-- ✅ Downloadable Analysis Report
-  
+-   ✅ Single Resume ATS Analysis
+-   ✅ Multiple Resume Ranking
+-   ✅ Job Description Matching
+-   ✅ Skill Extraction
+-   ✅ Missing Skill Detection
+-   ✅ ATS Compatibility Score
+-   ✅ Candidate Comparison Dashboard
+-   ✅ Interactive Plotly Visualizations
+-   ✅ Personalized Resume Suggestions
+-   ✅ Downloadable Analysis Report
+
+------------------------------------------------------------------------
 
 # 🎯 Future Enhancements
 
-- GPT-powered Resume Feedback
-- DOCX Resume Support
-- OCR-based Resume Parsing
-- Recruiter Authentication
-- Database Integration
-- Email Report Sharing
-- AI Interview Question Generator
-- Resume Recommendation Engine
+-   🤖 LLM-powered Resume Feedback
+-   📄 DOCX Resume Support
+-   🖼 OCR-based Resume Parsing
+-   🔐 Recruiter Authentication
+-   🗄 Database Integration
+-   📧 Email Report Generation
+-   💬 AI Interview Question Generator
+-   📈 Resume Analytics Dashboard
+-   🌐 Multi-language Resume Support
 
----
+------------------------------------------------------------------------
 
 # 🤝 Contributing
 
-Contributions are welcome!
+1.  Fork the repository.
+2.  Create a feature branch.
+3.  Commit your changes.
+4.  Open a Pull Request.
 
-1. Fork the repository.
-2. Create a new feature branch.
-3. Commit your changes.
-4. Open a Pull Request.
-
----
+------------------------------------------------------------------------
 
 # 📜 License
 
 This project is licensed under the **MIT License**.
 
----
+------------------------------------------------------------------------
 
-<div align="center">
+::: {align="center"}
+### ⭐ If you found this project useful, consider giving it a Star!
 
-### ⭐ If you found this project helpful, consider giving it a Star!
-
-Made with ❤️ by **Ankush Sharma**
-
-</div>
+**Made with ❤️ by Ankush Sharma**
+:::
