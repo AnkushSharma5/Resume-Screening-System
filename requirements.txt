@@ -1,0 +1,10 @@
+streamlit>=1.37.0
+pandas
+numpy
+plotly
+scikit-learn
+PyPDF2
+reportlab
+pdfplumber
+python-docx
+matplotlib
