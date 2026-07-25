@@ -186,7 +186,7 @@ source venv/bin/activate
 
 ``` bash
 pip install -r requirements.txt
-streamlit run app.py
+https://ankush-resume-screening.streamlit.app
 ```
 
 ------------------------------------------------------------------------
