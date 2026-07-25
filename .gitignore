@@ -33,6 +33,7 @@ models/*.joblib
 # ==========================
 data/*.csv
 data/*.xlsx
+!data/skills.csv
 
 # ==========================
 # Generated Reports
