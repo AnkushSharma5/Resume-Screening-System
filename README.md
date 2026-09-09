@@ -8,6 +8,8 @@
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
+![CrewAI](https://img.shields.io/badge/CrewAI-Agents-6366F1?style=for-the-badge)
+![SentenceTransformers](https://img.shields.io/badge/Sentence--Transformers-Embeddings-10B981?style=for-the-badge)
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Open-success?style=for-the-badge)](https://YOUR-STREAMLIT-APP.streamlit.app)
 
@@ -142,6 +144,52 @@ Best Candidate Selection
 
 ------------------------------------------------------------------------
 
+# 🤖 Agentic AI Architecture
+
+## Dual NLP Similarity
+
+Resumes are scored against the job description using **two complementary NLP techniques** run in parallel:
+
+| Technique | Method | Strength |
+|-----------|--------|----------|
+| **TF-IDF Similarity** | Keyword frequency vectors + cosine similarity | Catches exact keyword overlap |
+| **Semantic Similarity** | `all-MiniLM-L6-v2` sentence embeddings + cosine similarity | Catches meaning matches even without exact keywords |
+
+Both scores are averaged into a **Combined Similarity** score, then weighted with Skill Match (`0.7 × similarity + 0.3 × skill_score`) to produce the final ATS score.
+
+## 3-Agent CrewAI Pipeline
+
+An optional multi-agent pipeline (toggle in the sidebar) orchestrates the analysis as three sequential CrewAI agents:
+
+``` text
+┌─────────────────────────┐
+│   1. Extraction Agent   │  Wraps: extract_text_from_pdf() + extract_skills()
+│   (PDF → Skills)        │  Output: resume text, skill list
+└────────────┬────────────┘
+             │ context
+             ▼
+┌─────────────────────────┐
+│   2. Matching Agent     │  Wraps: calculate_similarity() + calculate_semantic_similarity()
+│   (Scores + Gaps)       │         + calculate_skill_match()
+└────────────┬────────────┘  Output: TF-IDF score, semantic score, matched/missing skills
+             │ context
+             ▼
+┌─────────────────────────┐
+│   3. Feedback Agent     │  Wraps: generate_suggestions() (LLM or rule-based fallback)
+│   (Suggestions)         │  Output: personalised improvement suggestions
+└─────────────────────────┘
+```
+
+**Process:** `Process.sequential` — each agent's output is passed as context to the next.
+
+## LLM-Powered Suggestions
+
+- Set `LLM_PROVIDER` (`openai` / `anthropic` / `gemini`) and `LLM_API_KEY` env vars to enable LLM feedback.
+- The prompt returns **structured JSON** (`[{"title": ..., "detail": ...}]`) for clean rendering.
+- **Fallback:** If no API key is set or the call fails, rule-based suggestions are used automatically — the app never crashes.
+
+------------------------------------------------------------------------
+
 # 📁 Project Structure
 
 ``` text
@@ -208,7 +256,9 @@ https://ankush-resume-screening.streamlit.app
 
 # 🎯 Future Enhancements
 
--   🤖 LLM-powered Resume Feedback
+-   ✅ LLM-powered Resume Feedback *(implemented)*
+-   ✅ Semantic Similarity with Sentence Embeddings *(implemented)*
+-   ✅ Multi-agent CrewAI Pipeline *(implemented)*
 -   📄 DOCX Resume Support
 -   🖼 OCR-based Resume Parsing
 -   🔐 Recruiter Authentication

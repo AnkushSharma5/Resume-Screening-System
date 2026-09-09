@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from pathlib import Path
 
 from analyzer import analyze_resume
+from agents.crew import analyze_resume_with_crew
 from utils.ranking import rank_resumes
 from utils.report_generator import generate_report
 from utils.suggestions import generate_suggestions
@@ -47,7 +48,7 @@ st.markdown(
 </h1>
 
 <p class="hero-subtitle">
-Smart ATS Resume Analyzer using NLP &amp; Machine Learning
+Smart ATS Resume Analyzer · TF-IDF &amp; Semantic NLP · CrewAI Multi-Agent Pipeline
 </p>
 
 </div>
@@ -66,7 +67,7 @@ with st.sidebar:
     <div class="sidebar-brand">
         <div class="brand-icon">📄</div>
         <div class="brand-title">Resume Screener</div>
-        <div class="brand-version">v2.0 • AI Powered</div>
+        <div class="brand-version">v3.0 • AI + Agents</div>
     </div>
     """,
         unsafe_allow_html=True,
@@ -83,6 +84,23 @@ with st.sidebar:
         ["Single Resume Analysis", "Multiple Resume Ranking"],
         label_visibility="collapsed",
     )
+
+    st.markdown("")
+
+    # ── CrewAI toggle ──────────────────────────────────────────
+    st.markdown(
+        '<div class="sidebar-label">🤖 Pipeline</div>', unsafe_allow_html=True
+    )
+    use_crew = st.checkbox(
+        "Use multi-agent pipeline (CrewAI)",
+        value=False,
+        help=(
+            "When enabled, runs a 3-agent CrewAI workflow: "
+            "Extraction Agent → Matching Agent → Feedback Agent. "
+            "Falls back to the classic pipeline if CrewAI is unavailable."
+        ),
+    )
+    # ──────────────────────────────────────────────────────────
 
     st.markdown("")
 
@@ -127,7 +145,8 @@ with st.sidebar:
         1. **Select Mode** — Single or Multiple
         2. **Upload** your resume PDF(s)
         3. **Paste** the job description
-        4. Click **Analyze Resume**
+        4. (Optional) Enable **CrewAI** pipeline
+        5. Click **Analyze Resume**
         """)
 
 
@@ -298,11 +317,23 @@ if analyze_button:
     # SINGLE RESUME ANALYSIS
     # =====================================================
 
-    result = analyze_resume(uploaded_resume, job_description)
+    # ── Choose pipeline ──────────────────────────────────────
+    if use_crew:
+        pipeline_label = "🤖 CrewAI Multi-Agent"
+        with st.spinner("Running CrewAI pipeline (Extraction → Matching → Feedback)…"):
+            result = analyze_resume_with_crew(uploaded_resume, job_description)
+        # Suggestions already in result["suggestions"] from the Feedback Agent
+        crew_suggestions = result.get("suggestions", [])
+    else:
+        pipeline_label = "⚡ Classic NLP"
+        with st.spinner("Analyzing resume…"):
+            result = analyze_resume(uploaded_resume, job_description)
+        crew_suggestions = None
+    # ─────────────────────────────────────────────────────────
 
-    st.success("✅ Resume Analyzed Successfully")
+    st.success(f"✅ Resume Analyzed Successfully  [{pipeline_label}]")
 
-    # ---- Metric Cards ----
+    # ---- Score Metric Cards ----
     st.markdown(
         """
     <div class="section-card" style="padding-bottom:8px;">
@@ -315,6 +346,7 @@ if analyze_button:
         unsafe_allow_html=True,
     )
 
+    # Row 1: ATS / Combined Similarity / Skill Match
     metric1, metric2, metric3 = st.columns(3)
 
     with metric1:
@@ -333,8 +365,8 @@ if analyze_button:
         st.markdown(
             f"""
         <div class="metric-card purple">
-            <div class="metric-icon">📄</div>
-            <div class="metric-label">Similarity</div>
+            <div class="metric-icon">🔗</div>
+            <div class="metric-label">Combined Similarity</div>
             <div class="metric-value">{result["similarity_score"]}%</div>
         </div>
         """,
@@ -348,6 +380,49 @@ if analyze_button:
             <div class="metric-icon">🛠</div>
             <div class="metric-label">Skill Match</div>
             <div class="metric-value">{result["skill_match_score"]}%</div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("")
+
+    # Row 2: TF-IDF vs Semantic — the two individual NLP scores
+    st.markdown(
+        """
+    <div class="section-card" style="padding-bottom:4px;">
+        <div class="section-header">
+            <span class="icon">🧠</span>
+            <h3>Dual NLP Similarity Breakdown</h3>
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    col_tfidf, col_semantic = st.columns(2)
+
+    with col_tfidf:
+        st.markdown(
+            f"""
+        <div class="metric-card" style="background:linear-gradient(135deg,#1e3a5f,#2563EB22);border:1px solid #2563EB44;">
+            <div class="metric-icon">📝</div>
+            <div class="metric-label">TF-IDF Similarity</div>
+            <div class="metric-value" style="font-size:1.6rem;">{result.get("tfidf_similarity_score", "—")}%</div>
+            <div style="font-size:0.7rem;color:#94A3B8;margin-top:4px;">Keyword overlap (classical NLP)</div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    with col_semantic:
+        st.markdown(
+            f"""
+        <div class="metric-card" style="background:linear-gradient(135deg,#1e3a2f,#10B98122);border:1px solid #10B98144;">
+            <div class="metric-icon">🔮</div>
+            <div class="metric-label">Semantic Similarity</div>
+            <div class="metric-value" style="font-size:1.6rem;">{result.get("semantic_similarity_score", "—")}%</div>
+            <div style="font-size:0.7rem;color:#94A3B8;margin-top:4px;">Sentence embeddings (all-MiniLM-L6-v2)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -373,11 +448,26 @@ if analyze_button:
 
     score_data = pd.DataFrame(
         {
-            "Category": ["ATS Score", "Similarity", "Skill Match"],
+            "Category": [
+                "ATS Score",
+                "TF-IDF Similarity",
+                "Semantic Similarity",
+                "Combined Similarity",
+                "Skill Match",
+            ],
             "Score": [
                 result["score"],
+                result.get("tfidf_similarity_score", 0),
+                result.get("semantic_similarity_score", 0),
                 result["similarity_score"],
                 result["skill_match_score"],
+            ],
+            "Type": [
+                "Overall",
+                "NLP",
+                "NLP",
+                "NLP",
+                "Skills",
             ],
         }
     )
@@ -387,8 +477,12 @@ if analyze_button:
         x="Category",
         y="Score",
         text="Score",
-        color="Score",
-        color_continuous_scale="Blues",
+        color="Type",
+        color_discrete_map={
+            "Overall": "#2563EB",
+            "NLP": "#10B981",
+            "Skills": "#F59E0B",
+        },
     )
 
     score_fig.update_traces(texttemplate="%{text}%", textposition="outside")
@@ -399,9 +493,9 @@ if analyze_button:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#94A3B8"),
         height=400,
-        yaxis_range=[0, 100],
-        coloraxis_showscale=False,
+        yaxis_range=[0, 115],
         margin=dict(l=20, r=20, t=30, b=20),
+        legend_title_text="Score Type",
     )
 
     st.plotly_chart(score_fig, use_container_width=True)
@@ -461,30 +555,58 @@ if analyze_button:
     # =====================================================
 
     st.markdown(
-        """
+        f"""
     <div class="section-card" style="padding-bottom:8px;">
         <div class="section-header">
             <span class="icon">💡</span>
-            <h3>AI Improvement Suggestions</h3>
+            <h3>AI Improvement Suggestions
+                <span style="font-size:0.7rem;font-weight:400;color:#64748B;margin-left:8px;">
+                    {"🤖 LLM-powered (with fallback)" if not use_crew else "🤖 Feedback Agent"}
+                </span>
+            </h3>
         </div>
     </div>
     """,
         unsafe_allow_html=True,
     )
 
-    suggestions = generate_suggestions(result)
+    # Use crew suggestions (already generated by Feedback Agent) or call generate_suggestions
+    if crew_suggestions is not None:
+        suggestions = crew_suggestions
+    else:
+        suggestions = generate_suggestions(
+            result,
+            resume_text=result.get("resume_text", ""),
+            job_description=job_description,
+        )
 
     if suggestions:
         for idx, suggestion in enumerate(suggestions, 1):
-            st.markdown(
-                f"""
-            <div class="suggestion-item" style="animation-delay: {idx * 0.1}s;">
-                <div class="suggestion-num">{idx}</div>
-                <div class="suggestion-text">{suggestion}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
+            # Handle both {"title": ..., "detail": ...} dicts and plain strings
+            if isinstance(suggestion, dict):
+                title = suggestion.get("title", "")
+                detail = suggestion.get("detail", "")
+                st.markdown(
+                    f"""
+                <div class="suggestion-item" style="animation-delay: {idx * 0.1}s;">
+                    <div class="suggestion-num">{idx}</div>
+                    <div class="suggestion-text">
+                        <strong>{title}</strong><br>{detail}
+                    </div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f"""
+                <div class="suggestion-item" style="animation-delay: {idx * 0.1}s;">
+                    <div class="suggestion-num">{idx}</div>
+                    <div class="suggestion-text">{suggestion}</div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
 
     else:
         st.success("Your resume is already well optimized.")
@@ -531,8 +653,9 @@ st.markdown(
 
 <div class="footer-tech">
     <span class="tech-badge">🐍 Python</span>
-    <span class="tech-badge">🧠 NLP</span>
-    <span class="tech-badge">⚙️ Machine Learning</span>
+    <span class="tech-badge">🧠 NLP + Embeddings</span>
+    <span class="tech-badge">🤖 CrewAI Agents</span>
+    <span class="tech-badge">💬 LLM Feedback</span>
     <span class="tech-badge">🎨 Streamlit</span>
 </div>
 

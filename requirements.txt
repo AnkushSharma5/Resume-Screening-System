@@ -8,3 +8,13 @@ python-docx
 pdfplumber
 nltk
 reportlab
+sentence-transformers
+crewai
+
+# --- Optional LLM providers (install whichever you have a key for) ---
+# Set LLM_PROVIDER and LLM_API_KEY environment variables to activate LLM suggestions.
+# Supported values for LLM_PROVIDER: openai, anthropic, gemini
+#
+# openai
+# anthropic
+# google-generativeai

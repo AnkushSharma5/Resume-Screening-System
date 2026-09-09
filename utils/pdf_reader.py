@@ -1,9 +1,6 @@
 import pdfplumber
 
 
-import pdfplumber
-
-
 def extract_text_from_pdf(pdf_file):
     """
     Extract text from a PDF file.
