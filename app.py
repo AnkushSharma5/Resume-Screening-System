@@ -32,26 +32,8 @@ if css_path.exists():
     with open(css_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Clean, professional vector SVG icon for resume screening
-DOC_ICON_SVG = """
-<svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
-    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.18)"/>
-    <path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M16 13H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M16 17H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M10 9H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-"""
-
-DOC_ICON_LARGE = """
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
-    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.2)"/>
-    <path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M16 13H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M16 17H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M10 9H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-"""
+DOC_ICON_SVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;display:inline-block;"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.2)"/><path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 13H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 9H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+DOC_ICON_LARGE = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;display:inline-block;"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.25)"/><path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 13H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 9H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 
 
 # =====================================================
@@ -59,17 +41,13 @@ DOC_ICON_LARGE = """
 # =====================================================
 
 st.markdown(
-    f"""
-<div class="hero-header">
-    <div class="hero-title-wrapper">
-        {DOC_ICON_LARGE}
-        <h1>AI Resume Screening System</h1>
-    </div>
-    <p class="hero-subtitle">
-        Enterprise ATS Analyzer · 70% Semantic &amp; 30% TF-IDF NLP · CrewAI Multi-Agent Pipeline
-    </p>
+    f"""<div class="hero-header">
+<div class="hero-title-wrapper">
+{DOC_ICON_LARGE}
+<h1 style="display:inline;vertical-align:middle;margin-left:8px;">AI Resume Screening System</h1>
 </div>
-""",
+<p class="hero-subtitle">Enterprise ATS Analyzer · 70% Semantic &amp; 30% TF-IDF NLP · CrewAI Multi-Agent Pipeline</p>
+</div>""",
     unsafe_allow_html=True,
 )
 
@@ -80,15 +58,13 @@ st.markdown(
 
 with st.sidebar:
     st.markdown(
-        f"""
-    <div class="sidebar-brand">
-        <div class="brand-icon-box">{DOC_ICON_SVG}</div>
-        <div>
-            <div class="brand-title">Resume Screener</div>
-            <div class="brand-version">v3.0 • AI + AGENTS</div>
-        </div>
-    </div>
-    """,
+        f"""<div class="sidebar-brand">
+<div class="brand-icon-box">{DOC_ICON_SVG}</div>
+<div>
+<div class="brand-title">Resume Screener</div>
+<div class="brand-version">v3.0 • AI + AGENTS</div>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -198,14 +174,12 @@ if analyze_button:
 
         # ---- Ranking Table ----
         st.markdown(
-            """
-        <div class="section-card">
-            <div class="section-header">
-                <span class="icon">🏆</span>
-                <h3>Candidate Leaderboard</h3>
-            </div>
-        </div>
-        """,
+            """<div class="section-card">
+<div class="section-header">
+<span class="icon">🏆</span>
+<h3>Candidate Leaderboard</h3>
+</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -229,14 +203,12 @@ if analyze_button:
 
         # ---- ATS Score Comparison Bar Chart ----
         st.markdown(
-            """
-        <div class="section-card" style="padding-bottom:8px;">
-            <div class="section-header">
-                <span class="icon">📊</span>
-                <h3>Candidate Comparison Chart</h3>
-            </div>
-        </div>
-        """,
+            """<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">📊</span>
+<h3>Candidate Comparison Chart</h3>
+</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -278,18 +250,16 @@ if analyze_button:
         best_resume = ranking[0]
 
         st.markdown(
-            f"""
-        <div class="best-candidate-card">
-            <div class="trophy">🏆</div>
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#A78BFA;margin-bottom:4px;">Top Ranked Candidate</div>
-            <div class="candidate-name">{best_resume["Resume"]}</div>
-            <div class="candidate-score">{best_resume["ATS Score"]:.2f}%</div>
-            <div style="display:flex;justify-content:center;gap:14px;margin-top:12px;font-size:13px;color:#94A3B8;flex-wrap:wrap;">
-                <span style="background:rgba(79,70,229,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(99,102,241,0.3);">📝 TF-IDF: <strong style="color:#818CF8;">{best_resume.get("TF-IDF Score", 0):.2f}%</strong></span>
-                <span style="background:rgba(16,185,129,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(16,185,129,0.3);">🔮 Semantic: <strong style="color:#34D399;">{best_resume.get("Semantic Score", 0):.2f}%</strong></span>
-            </div>
-        </div>
-        """,
+            f"""<div class="best-candidate-card">
+<div class="trophy">🏆</div>
+<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#A78BFA;margin-bottom:4px;">Top Ranked Candidate</div>
+<div class="candidate-name">{best_resume["Resume"]}</div>
+<div class="candidate-score">{best_resume["ATS Score"]:.2f}%</div>
+<div style="display:flex;justify-content:center;gap:14px;margin-top:12px;font-size:13px;color:#94A3B8;flex-wrap:wrap;">
+<span style="background:rgba(79,70,229,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(99,102,241,0.3);">📝 TF-IDF: <strong style="color:#818CF8;">{best_resume.get("TF-IDF Score", 0):.2f}%</strong></span>
+<span style="background:rgba(16,185,129,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(16,185,129,0.3);">🔮 Semantic: <strong style="color:#34D399;">{best_resume.get("Semantic Score", 0):.2f}%</strong></span>
+</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -297,14 +267,12 @@ if analyze_button:
 
         # ---- Skills Tabs for Top Candidate ----
         st.markdown(
-            """
-        <div class="section-card" style="padding-bottom:8px;">
-            <div class="section-header">
-                <span class="icon">🎯</span>
-                <h3>Top Candidate Skill Breakdown</h3>
-            </div>
-        </div>
-        """,
+            """<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">🎯</span>
+<h3>Top Candidate Skill Breakdown</h3>
+</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -353,14 +321,12 @@ if analyze_button:
 
     # ---- Primary Metrics (Row 1) ----
     st.markdown(
-        """
-    <div class="section-card" style="padding-bottom:8px;">
-        <div class="section-header">
-            <span class="icon">📊</span>
-            <h3>ATS Performance Metrics</h3>
-        </div>
-    </div>
-    """,
+        """<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">📊</span>
+<h3>ATS Performance Metrics</h3>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -368,39 +334,33 @@ if analyze_button:
 
     with metric1:
         st.markdown(
-            f"""
-        <div class="metric-card blue">
-            <div class="metric-icon">🎯</div>
-            <div class="metric-label">Overall ATS Score</div>
-            <div class="metric-value">{result["score"]}%</div>
-        </div>
-        """,
+            f"""<div class="metric-card blue">
+<div class="metric-icon">🎯</div>
+<div class="metric-label">Overall ATS Score</div>
+<div class="metric-value">{result["score"]}%</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
     with metric2:
         st.markdown(
-            f"""
-        <div class="metric-card purple">
-            <div class="metric-icon">🔗</div>
-            <div class="metric-label">Combined Similarity</div>
-            <div class="metric-value">{result["similarity_score"]}%</div>
-            <div style="font-size:11px;color:#94A3B8;margin-top:4px;">70% Semantic + 30% TF-IDF</div>
-        </div>
-        """,
+            f"""<div class="metric-card purple">
+<div class="metric-icon">🔗</div>
+<div class="metric-label">Combined Similarity</div>
+<div class="metric-value">{result["similarity_score"]}%</div>
+<div style="font-size:11px;color:#94A3B8;margin-top:4px;">70% Semantic + 30% TF-IDF</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
     with metric3:
         st.markdown(
-            f"""
-        <div class="metric-card emerald">
-            <div class="metric-icon">🛠</div>
-            <div class="metric-label">Skill Match Score</div>
-            <div class="metric-value">{result["skill_match_score"]}%</div>
-            <div style="font-size:11px;color:#94A3B8;margin-top:4px;">Matched vs Required Skills</div>
-        </div>
-        """,
+            f"""<div class="metric-card emerald">
+<div class="metric-icon">🛠</div>
+<div class="metric-label">Skill Match Score</div>
+<div class="metric-value">{result["skill_match_score"]}%</div>
+<div style="font-size:11px;color:#94A3B8;margin-top:4px;">Matched vs Required Skills</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -408,14 +368,12 @@ if analyze_button:
 
     # ---- Dual NLP Similarity Breakdown (Row 2) ----
     st.markdown(
-        """
-    <div class="section-card" style="padding-bottom:4px;">
-        <div class="section-header">
-            <span class="icon">🧠</span>
-            <h3>Dual NLP Similarity Breakdown</h3>
-        </div>
-    </div>
-    """,
+        """<div class="section-card" style="padding-bottom:4px;">
+<div class="section-header">
+<span class="icon">🧠</span>
+<h3>Dual NLP Similarity Breakdown</h3>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -423,27 +381,23 @@ if analyze_button:
 
     with col_tfidf:
         st.markdown(
-            f"""
-        <div class="metric-card" style="border-top:3px solid #6366F1;">
-            <div class="metric-icon">📝</div>
-            <div class="metric-label">TF-IDF Keyword Similarity <span style="font-size:11px;background:rgba(99,102,241,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#A5B4FC;">30% Weight</span></div>
-            <div class="metric-value" style="font-size:1.6rem;color:#A5B4FC;">{result.get("tfidf_similarity_score", "—")}%</div>
-            <div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Exact keyword frequency overlap</div>
-        </div>
-        """,
+            f"""<div class="metric-card" style="border-top:3px solid #6366F1;">
+<div class="metric-icon">📝</div>
+<div class="metric-label">TF-IDF Keyword Similarity <span style="font-size:11px;background:rgba(99,102,241,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#A5B4FC;">30% Weight</span></div>
+<div class="metric-value" style="font-size:1.6rem;color:#A5B4FC;">{result.get("tfidf_similarity_score", "—")}%</div>
+<div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Exact keyword frequency overlap</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
     with col_semantic:
         st.markdown(
-            f"""
-        <div class="metric-card" style="border-top:3px solid #10B981;">
-            <div class="metric-icon">🔮</div>
-            <div class="metric-label">Semantic Embedding Similarity <span style="font-size:11px;background:rgba(16,185,129,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#6EE7B7;">70% Weight</span></div>
-            <div class="metric-value" style="font-size:1.6rem;color:#6EE7B7;">{result.get("semantic_similarity_score", "—")}%</div>
-            <div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Dense vector embeddings (all-MiniLM-L6-v2)</div>
-        </div>
-        """,
+            f"""<div class="metric-card" style="border-top:3px solid #10B981;">
+<div class="metric-icon">🔮</div>
+<div class="metric-label">Semantic Embedding Similarity <span style="font-size:11px;background:rgba(16,185,129,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#6EE7B7;">70% Weight</span></div>
+<div class="metric-value" style="font-size:1.6rem;color:#6EE7B7;">{result.get("semantic_similarity_score", "—")}%</div>
+<div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Dense vector embeddings (all-MiniLM-L6-v2)</div>
+</div>""",
             unsafe_allow_html=True,
         )
 
@@ -451,14 +405,12 @@ if analyze_button:
 
     # ---- Score Overview Chart ----
     st.markdown(
-        """
-    <div class="section-card" style="padding-bottom:8px;">
-        <div class="section-header">
-            <span class="icon">📈</span>
-            <h3>Score Overview</h3>
-        </div>
-    </div>
-    """,
+        """<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">📈</span>
+<h3>Score Overview</h3>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -520,14 +472,12 @@ if analyze_button:
 
     # ---- Skills Breakdown Tabs ----
     st.markdown(
-        """
-    <div class="section-card" style="padding-bottom:8px;">
-        <div class="section-header">
-            <span class="icon">🎯</span>
-            <h3>Skills Analysis</h3>
-        </div>
-    </div>
-    """,
+        """<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">🎯</span>
+<h3>Skills Analysis</h3>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -581,18 +531,16 @@ if analyze_button:
         badge_style = "color:#F59E0B;background:rgba(245,158,11,0.12);padding:3px 10px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);"
 
     st.markdown(
-        f"""
-    <div class="section-card" style="padding-bottom:8px;">
-        <div class="section-header">
-            <span class="icon">💡</span>
-            <h3>Improvement Suggestions
-                <span style="font-size:0.75rem;font-weight:600;margin-left:10px;{badge_style}">
-                    {source_label}
-                </span>
-            </h3>
-        </div>
-    </div>
-    """,
+        f"""<div class="section-card" style="padding-bottom:8px;">
+<div class="section-header">
+<span class="icon">💡</span>
+<h3>Improvement Suggestions
+<span style="font-size:0.75rem;font-weight:600;margin-left:10px;{badge_style}">
+{source_label}
+</span>
+</h3>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -602,24 +550,20 @@ if analyze_button:
                 title = suggestion.get("title", "")
                 detail = suggestion.get("detail", "")
                 st.markdown(
-                    f"""
-                <div class="suggestion-item">
-                    <div class="suggestion-num">{idx}</div>
-                    <div class="suggestion-text">
-                        <strong>{title}</strong><br>{detail}
-                    </div>
-                </div>
-                """,
+                    f"""<div class="suggestion-item">
+<div class="suggestion-num">{idx}</div>
+<div class="suggestion-text">
+<strong>{title}</strong><br>{detail}
+</div>
+</div>""",
                     unsafe_allow_html=True,
                 )
             else:
                 st.markdown(
-                    f"""
-                <div class="suggestion-item">
-                    <div class="suggestion-num">{idx}</div>
-                    <div class="suggestion-text">{suggestion}</div>
-                </div>
-                """,
+                    f"""<div class="suggestion-item">
+<div class="suggestion-num">{idx}</div>
+<div class="suggestion-text">{suggestion}</div>
+</div>""",
                     unsafe_allow_html=True,
                 )
     else:
@@ -629,13 +573,11 @@ if analyze_button:
 
     # ---- Download PDF Report CTA ----
     st.markdown(
-        """
-    <div class="download-cta">
-        <div class="cta-icon">📄</div>
-        <div class="cta-title">Download Resume Report</div>
-        <div class="cta-desc">Get a detailed PDF analysis of your resume and ATS fit</div>
-    </div>
-    """,
+        """<div class="download-cta">
+<div class="cta-icon">📄</div>
+<div class="cta-title">Download Resume Report</div>
+<div class="cta-desc">Get a detailed PDF analysis of your resume and ATS fit</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -654,21 +596,19 @@ else:
     # DEFAULT LANDING STATE (Clean & Minimal)
     # =====================================================
     st.markdown(
-        f"""
-    <div class="landing-card">
-        <div class="landing-icon-box">{DOC_ICON_LARGE}</div>
-        <div class="landing-title">Ready for Resume Screening</div>
-        <div class="landing-desc">
-            Upload candidate resumes on the left sidebar, paste the target job description, and click <strong>🚀 Analyze Resume</strong> to evaluate ATS match scores and skill gaps.
-        </div>
-        <div>
-            <span class="landing-pill">✨ 68 Technical Skills</span>
-            <span class="landing-pill">🧠 70% Semantic + 30% TF-IDF</span>
-            <span class="landing-pill">🤖 Optional CrewAI Pipeline</span>
-            <span class="landing-pill">📄 PDF Report Export</span>
-        </div>
-    </div>
-    """,
+        f"""<div class="landing-card">
+<div class="landing-icon-box">{DOC_ICON_LARGE}</div>
+<div class="landing-title">Ready for Resume Screening</div>
+<div class="landing-desc">
+Upload candidate resumes on the left sidebar, paste the target job description, and click <strong>🚀 Analyze Resume</strong> to evaluate ATS match scores and skill gaps.
+</div>
+<div>
+<span class="landing-pill">✨ 68 Technical Skills</span>
+<span class="landing-pill">🧠 70% Semantic + 30% TF-IDF</span>
+<span class="landing-pill">🤖 Optional CrewAI Pipeline</span>
+<span class="landing-pill">📄 PDF Report Export</span>
+</div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -678,17 +618,15 @@ else:
 # =====================================================
 
 st.markdown(
-    """
-<div class="premium-footer">
-    <div class="footer-title">🚀 AI Resume Screening System</div>
-    <div class="footer-tech">
-        <span class="tech-badge">🐍 Python</span>
-        <span class="tech-badge">🧠 NLP &amp; Embeddings</span>
-        <span class="tech-badge">🤖 CrewAI Agents</span>
-        <span class="tech-badge">💬 LLM Suggestions</span>
-        <span class="tech-badge">📄 ReportLab</span>
-    </div>
+    """<div class="premium-footer">
+<div class="footer-title">🚀 AI Resume Screening System</div>
+<div class="footer-tech">
+<span class="tech-badge">🐍 Python</span>
+<span class="tech-badge">🧠 NLP &amp; Embeddings</span>
+<span class="tech-badge">🤖 CrewAI Agents</span>
+<span class="tech-badge">💬 LLM Suggestions</span>
+<span class="tech-badge">📄 ReportLab</span>
 </div>
-""",
+</div>""",
     unsafe_allow_html=True,
 )
