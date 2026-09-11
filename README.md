@@ -11,7 +11,7 @@
 ![CrewAI](https://img.shields.io/badge/CrewAI-Agents-6366F1?style=for-the-badge)
 ![SentenceTransformers](https://img.shields.io/badge/Sentence--Transformers-Embeddings-10B981?style=for-the-badge)
 
-[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Open-success?style=for-the-badge)](https://YOUR-STREAMLIT-APP.streamlit.app)
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Open-success?style=for-the-badge)](https://ankush-resume-screening.streamlit.app)
 
 ---
 ### 📌 ATS Scoring • Resume Ranking • Skill Matching • AI Suggestions
@@ -20,7 +20,7 @@
 > job descriptions, calculates ATS compatibility scores, ranks
 > candidates, identifies missing skills, and generates personalized
 > improvement suggestions.
-:::
+
 
 ------------------------------------------------------------------------
 
@@ -45,35 +45,35 @@ candidates while helping job seekers optimize their resumes.
 
 ### 📄 Single Resume Analysis
 
--   ATS Compatibility Score
--   Resume Parsing (PDF)
+-   ATS Compatibility Score (weighted blend of similarity + skill match)
+-   **Dual NLP Scoring** — TF-IDF keyword similarity + Semantic sentence-embedding similarity shown side by side
+-   Resume Parsing (PDF via pdfplumber)
 -   Job Description Matching
--   Skill Extraction
--   Missing Skill Identification
--   Personalized AI Suggestions
+-   Skill Extraction & Missing Skill Identification
+-   **LLM-Powered AI Suggestions** (OpenAI / Anthropic / Gemini) with rule-based fallback
 
 ### 🏆 Multiple Resume Ranking
 
 -   Upload Multiple Resumes
--   Automatic Candidate Ranking
--   ATS Score Comparison
--   Best Candidate Identification
--   Recruiter-Friendly Candidate Comparison
+-   Automatic Candidate Ranking with TF-IDF, Semantic, and ATS Score per resume
+-   ATS Score Comparison Chart
+-   Best Candidate Identification with score breakdown
+-   Recruiter-Friendly Candidate Comparison Table
 
 ### 📊 Interactive Dashboard
 
--   ATS Score Visualization
+-   Score Overview bar chart (ATS, TF-IDF, Semantic, Combined, Skill Match)
 -   Resume Comparison Charts
 -   Interactive Plotly Graphs
 -   Downloadable PDF Report
 
 ### 🤖 AI-Powered Evaluation
 
--   Keyword Matching
+-   Optional **CrewAI Multi-Agent Pipeline** (3 sequential agents: Extraction → Matching → Feedback)
+-   TF-IDF keyword overlap scoring
+-   Semantic similarity via `all-MiniLM-L6-v2` sentence embeddings
 -   Skill Gap Analysis
--   Resume Quality Assessment
--   Resume Strength Detection
--   Actionable Resume Recommendations
+-   Actionable Resume Recommendations (LLM or rule-based)
 
 ------------------------------------------------------------------------
 
@@ -103,43 +103,48 @@ candidates while helping job seekers optimize their resumes.
 
 # ⚙️ Tech Stack
 
-  Category           Technologies
-  ------------------ ---------------
-  Language           Python
-  Framework          Streamlit
-  Data Analysis      Pandas, NumPy
-  Machine Learning   Scikit-learn
-  Visualization      Plotly
-  PDF Processing     PyPDF2
-  Styling            HTML, CSS
-  Version Control    Git, GitHub
+| Category | Technologies |
+|---|---|
+| Language | Python |
+| Framework | Streamlit |
+| Data Analysis | Pandas, NumPy |
+| Machine Learning | Scikit-learn, Sentence-Transformers |
+| NLP / Embeddings | TF-IDF (Scikit-learn), all-MiniLM-L6-v2 |
+| Agent Framework | CrewAI (optional, with lightweight fallback) |
+| LLM Suggestions | OpenAI / Anthropic / Gemini (optional) |
+| Visualization | Plotly |
+| PDF Processing | pdfplumber |
+| Styling | HTML, CSS (dark glassmorphism theme) |
+| Version Control | Git, GitHub |
 
 ------------------------------------------------------------------------
 
 # 🧠 Workflow
 
 ``` text
-Resume Upload
+Resume Upload (PDF)
       │
       ▼
-PDF Text Extraction
+PDF Text Extraction (pdfplumber)
       │
       ▼
-Skill Extraction
+Preprocessing + Skill Extraction
       │
-      ▼
-Job Description Matching
-      │
-      ▼
-ATS Score Calculation
-      │
-      ├────────► Resume Suggestions
-      │
-      ▼
-Multiple Resume Ranking
-      │
-      ▼
-Best Candidate Selection
+      ├──────────────────────────────┐
+      ▼                              ▼
+TF-IDF Similarity          Semantic Similarity
+(keyword vectors)          (MiniLM embeddings)
+      │                              │
+      └──────────┬───────────────────┘
+                 ▼
+      Combined Similarity + Skill Match
+                 │
+                 ▼
+         ATS Score (weighted)
+                 │
+      ┌──────────┼──────────┐
+      ▼          ▼          ▼
+  Suggestions  Ranking  PDF Report
 ```
 
 ------------------------------------------------------------------------
@@ -193,18 +198,41 @@ An optional multi-agent pipeline (toggle in the sidebar) orchestrates the analys
 # 📁 Project Structure
 
 ``` text
-Resume-Screening-System
+Resume-Screening-System/
+├── agents/
+│   ├── __init__.py
+│   └── crew.py               # CrewAI 3-agent pipeline (with lightweight fallback)
+├── assets/
+│   └── style.css              # Dark glassmorphism theme
 ├── screenshots/
 │   ├── home.png
 │   ├── resume-analysis.png
 │   ├── skills-suggestions.png
 │   ├── resume-ranking.png
 │   └── best-candidate.png
-├── assets/
-│   └── style.css
+├── sample_resume/
+│   └── resume1.pdf
+├── tests/
+│   ├── test_crew.py
+│   ├── test_matching.py
+│   ├── test_pdf.py
+│   ├── test_preprocessing.py
+│   ├── test_ranking.py
+│   ├── test_semantic_similarity.py
+│   ├── test_similarity.py
+│   ├── test_skill_extractor.py
+│   └── test_suggestions.py
 ├── utils/
-├── analyzer.py
-├── app.py
+│   ├── matching.py            # Skill match scoring
+│   ├── pdf_reader.py          # PDF text extraction (pdfplumber)
+│   ├── preprocessing.py       # Text cleaning & stopword removal
+│   ├── ranking.py             # Multi-resume ranking
+│   ├── report_generator.py    # PDF report generation (ReportLab)
+│   ├── similarity.py          # TF-IDF + semantic similarity
+│   ├── skill_extractor.py     # Skill identification from text
+│   └── suggestions.py         # LLM / rule-based suggestions
+├── analyzer.py                # Single-resume analysis orchestrator
+├── app.py                     # Streamlit UI
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -234,7 +262,7 @@ source venv/bin/activate
 
 ``` bash
 pip install -r requirements.txt
-https://ankush-resume-screening.streamlit.app
+streamlit run app.py
 ```
 
 ------------------------------------------------------------------------
@@ -242,15 +270,17 @@ https://ankush-resume-screening.streamlit.app
 # 📊 Core Functionalities
 
 -   ✅ Single Resume ATS Analysis
--   ✅ Multiple Resume Ranking
+-   ✅ Multiple Resume Ranking (with TF-IDF & Semantic score per resume)
+-   ✅ Dual NLP Similarity (TF-IDF + Semantic)
 -   ✅ Job Description Matching
--   ✅ Skill Extraction
--   ✅ Missing Skill Detection
+-   ✅ Skill Extraction & Missing Skill Detection
 -   ✅ ATS Compatibility Score
+-   ✅ Optional CrewAI Multi-Agent Pipeline
+-   ✅ LLM-Powered Suggestions (with rule-based fallback)
 -   ✅ Candidate Comparison Dashboard
 -   ✅ Interactive Plotly Visualizations
--   ✅ Personalized Resume Suggestions
--   ✅ Downloadable Analysis Report
+-   ✅ Downloadable PDF Analysis Report
+-   ✅ 38+ pytest tests
 
 ------------------------------------------------------------------------
 
@@ -285,8 +315,10 @@ This project is licensed under the **MIT License**.
 
 ------------------------------------------------------------------------
 
+<div align="center">
 
 ### ⭐ If you found this project useful, consider giving it a Star!
 
 **Made with ❤️ by Ankush Sharma**
-:::
+
+</div>

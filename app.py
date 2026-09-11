@@ -197,7 +197,18 @@ if analyze_button:
 
         ranking_df.insert(0, "Rank", range(1, len(ranking_df) + 1))
 
-        st.dataframe(ranking_df, use_container_width=True, hide_index=True)
+        st.dataframe(
+            ranking_df,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Rank": st.column_config.NumberColumn("Rank", width="small"),
+                "Resume": st.column_config.TextColumn("Resume", width="medium"),
+                "ATS Score": st.column_config.NumberColumn("ATS Score", format="%.2f%%"),
+                "TF-IDF Score": st.column_config.NumberColumn("TF-IDF Score", format="%.2f%%"),
+                "Semantic Score": st.column_config.NumberColumn("Semantic Score", format="%.2f%%"),
+            },
+        )
 
         st.markdown("")
 
@@ -222,6 +233,7 @@ if analyze_button:
             x="Resume",
             y="ATS Score",
             text="ATS Score",
+            hover_data=["TF-IDF Score", "Semantic Score"],
             color="Resume",
             color_discrete_sequence=[
                 "#2563EB",
@@ -263,6 +275,10 @@ if analyze_button:
             <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#94A3B8;margin-bottom:4px;">Best Matching Candidate</div>
             <div class="candidate-name">📄 {best_resume["Resume"]}</div>
             <div class="candidate-score">{best_resume["ATS Score"]:.2f}%</div>
+            <div style="display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:13px;color:#94A3B8;">
+                <span style="background:rgba(37,99,235,0.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(37,99,235,0.3);">📝 TF-IDF: <strong style="color:#60A5FA;">{best_resume.get("TF-IDF Score", 0):.2f}%</strong></span>
+                <span style="background:rgba(16,185,129,0.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(16,185,129,0.3);">🔮 Semantic: <strong style="color:#34D399;">{best_resume.get("Semantic Score", 0):.2f}%</strong></span>
+            </div>
         </div>
         """,
             unsafe_allow_html=True,

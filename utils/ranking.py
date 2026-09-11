@@ -19,8 +19,10 @@ def rank_resumes(uploaded_files, job_description):
             {
                 "Resume": resume.name,
                 "ATS Score": result["score"],
+                "TF-IDF Score": result["tfidf_similarity_score"],
+                "Semantic Score": result["semantic_similarity_score"],
                 "Matched Skills": result["matched_skills"],
-                "Missing Skills": result["missing_skills"]
+                "Missing Skills": result["missing_skills"],
             }
         )
 
