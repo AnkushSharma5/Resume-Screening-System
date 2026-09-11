@@ -1,9 +1,7 @@
-import base64
 from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import streamlit as st
 
 from analyzer import analyze_resume
@@ -26,7 +24,7 @@ st.set_page_config(
 
 
 # =====================================================
-# LOAD CSS & IMAGE HELPERS
+# LOAD CSS & SVG ICONS
 # =====================================================
 
 css_path = Path("assets/style.css")
@@ -34,21 +32,26 @@ if css_path.exists():
     with open(css_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# Clean, professional vector SVG icon for resume screening
+DOC_ICON_SVG = """
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.18)"/>
+    <path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 13H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 17H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 9H8" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+"""
 
-def get_image_base64(image_path: str) -> str:
-    """Return base64 data URI for embedding local images in HTML."""
-    p = Path(image_path)
-    if p.exists():
-        with open(p, "rb") as f:
-            encoded = base64.b64encode(f.read()).decode()
-            ext = p.suffix.lower().replace(".", "")
-            mime = "image/jpeg" if ext in ["jpg", "jpeg"] else "image/png"
-            return f"data:{mime};base64,{encoded}"
-    return ""
-
-
-hero_banner_b64 = get_image_base64("assets/hero_banner.jpg")
-resume_doc_b64 = get_image_base64("assets/resume_doc.jpg")
+DOC_ICON_LARGE = """
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(99,102,241,0.2)"/>
+    <path d="M14 2V8H20" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 13H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 17H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 9H8" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+"""
 
 
 # =====================================================
@@ -56,9 +59,12 @@ resume_doc_b64 = get_image_base64("assets/resume_doc.jpg")
 # =====================================================
 
 st.markdown(
-    """
+    f"""
 <div class="hero-header">
-    <h1>📄 AI Resume Screening System</h1>
+    <div class="hero-title-wrapper">
+        {DOC_ICON_LARGE}
+        <h1>AI Resume Screening System</h1>
+    </div>
     <p class="hero-subtitle">
         Enterprise ATS Analyzer · 70% Semantic &amp; 30% TF-IDF NLP · CrewAI Multi-Agent Pipeline
     </p>
@@ -74,11 +80,13 @@ st.markdown(
 
 with st.sidebar:
     st.markdown(
-        """
+        f"""
     <div class="sidebar-brand">
-        <div class="brand-icon">📄</div>
-        <div class="brand-title">Resume Screener</div>
-        <div class="brand-version">v3.0 • AI + AGENTS</div>
+        <div class="brand-icon-box">{DOC_ICON_SVG}</div>
+        <div>
+            <div class="brand-title">Resume Screener</div>
+            <div class="brand-version">v3.0 • AI + AGENTS</div>
+        </div>
     </div>
     """,
         unsafe_allow_html=True,
@@ -240,11 +248,11 @@ if analyze_button:
             hover_data=["TF-IDF Score", "Semantic Score"],
             color="Resume",
             color_discrete_sequence=[
-                "#6366F1",
-                "#8B5CF6",
+                "#4F46E5",
+                "#7C3AED",
                 "#10B981",
                 "#F59E0B",
-                "#38BDF8",
+                "#0EA5E9",
                 "#EC4899",
             ],
         )
@@ -255,7 +263,7 @@ if analyze_button:
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(color="#94A3B8", family="Plus Jakarta Sans"),
-            height=430,
+            height=400,
             xaxis_title="Candidate Resume",
             yaxis_title="Overall ATS Score (%)",
             coloraxis_showscale=False,
@@ -273,12 +281,12 @@ if analyze_button:
             f"""
         <div class="best-candidate-card">
             <div class="trophy">🏆</div>
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#A78BFA;margin-bottom:6px;">Top Ranked Candidate</div>
-            <div class="candidate-name">📄 {best_resume["Resume"]}</div>
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#A78BFA;margin-bottom:4px;">Top Ranked Candidate</div>
+            <div class="candidate-name">{best_resume["Resume"]}</div>
             <div class="candidate-score">{best_resume["ATS Score"]:.2f}%</div>
-            <div style="display:flex;justify-content:center;gap:16px;margin-top:14px;font-size:13.5px;color:#94A3B8;flex-wrap:wrap;">
-                <span style="background:rgba(99,102,241,0.15);padding:6px 16px;border-radius:20px;border:1px solid rgba(99,102,241,0.35);">📝 TF-IDF: <strong style="color:#818CF8;">{best_resume.get("TF-IDF Score", 0):.2f}%</strong></span>
-                <span style="background:rgba(16,185,129,0.15);padding:6px 16px;border-radius:20px;border:1px solid rgba(16,185,129,0.35);">🔮 Semantic: <strong style="color:#34D399;">{best_resume.get("Semantic Score", 0):.2f}%</strong></span>
+            <div style="display:flex;justify-content:center;gap:14px;margin-top:12px;font-size:13px;color:#94A3B8;flex-wrap:wrap;">
+                <span style="background:rgba(79,70,229,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(99,102,241,0.3);">📝 TF-IDF: <strong style="color:#818CF8;">{best_resume.get("TF-IDF Score", 0):.2f}%</strong></span>
+                <span style="background:rgba(16,185,129,0.15);padding:5px 14px;border-radius:20px;border:1px solid rgba(16,185,129,0.3);">🔮 Semantic: <strong style="color:#34D399;">{best_resume.get("Semantic Score", 0):.2f}%</strong></span>
             </div>
         </div>
         """,
@@ -311,7 +319,7 @@ if analyze_button:
                     f'<span class="skill-chip matched">✔ {skill}</span>'
                     for skill in best_resume["Matched Skills"]
                 )
-                st.markdown(f'<div style="padding:10px 0;">{chips_html}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div style="padding:8px 0;">{chips_html}</div>', unsafe_allow_html=True)
             else:
                 st.info("No matching skills detected for this role.")
 
@@ -321,7 +329,7 @@ if analyze_button:
                     f'<span class="skill-chip missing">✘ {skill}</span>'
                     for skill in best_resume["Missing Skills"]
                 )
-                st.markdown(f'<div style="padding:10px 0;">{chips_html}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div style="padding:8px 0;">{chips_html}</div>', unsafe_allow_html=True)
             else:
                 st.success("Candidate matches 100% of required JD skills!")
 
@@ -342,34 +350,6 @@ if analyze_button:
         crew_suggestions = None
 
     st.success(f"✅ Resume Analyzed Successfully  [{pipeline_label}]")
-
-    # ---- Candidate Overview Card with Visual Avatar ----
-    resume_file_name = getattr(uploaded_resume, "name", "Uploaded Resume.pdf")
-    char_count = len(result.get("resume_text", ""))
-    matched_count = len(result.get("matched_skills", []))
-    total_skills = len(result.get("resume_skills", []))
-
-    avatar_html = (
-        f'<div class="candidate-avatar-wrapper"><img src="{resume_doc_b64}" alt="Resume Visual" /></div>'
-        if resume_doc_b64
-        else '<div class="candidate-avatar-wrapper" style="display:flex;align-items:center;justify-content:center;font-size:42px;">📄</div>'
-    )
-
-    st.markdown(
-        f"""
-    <div class="candidate-overview-card">
-        {avatar_html}
-        <div class="candidate-info">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#818CF8;margin-bottom:4px;">Candidate Resume Analysis</div>
-            <div class="candidate-title">{resume_file_name}</div>
-            <div class="candidate-meta">
-                📊 <strong>{total_skills}</strong> detected skills &nbsp;•&nbsp; 🎯 <strong>{matched_count}</strong> JD matches &nbsp;•&nbsp; 📝 <strong>{char_count:,}</strong> characters analyzed
-            </div>
-        </div>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
 
     # ---- Primary Metrics (Row 1) ----
     st.markdown(
@@ -444,11 +424,11 @@ if analyze_button:
     with col_tfidf:
         st.markdown(
             f"""
-        <div class="metric-card" style="background:linear-gradient(135deg,rgba(30,58,95,0.7),rgba(37,99,235,0.15));border:1px solid rgba(59,130,246,0.35);">
+        <div class="metric-card" style="border-top:3px solid #6366F1;">
             <div class="metric-icon">📝</div>
-            <div class="metric-label">TF-IDF Keyword Similarity <span style="font-size:11px;background:rgba(59,130,246,0.25);padding:2px 8px;border-radius:10px;margin-left:6px;color:#93C5FD;">30% Weight</span></div>
-            <div class="metric-value" style="font-size:1.8rem;color:#93C5FD;">{result.get("tfidf_similarity_score", "—")}%</div>
-            <div style="font-size:0.75rem;color:#94A3B8;margin-top:6px;">Exact keyword frequency &amp; token co-occurrence</div>
+            <div class="metric-label">TF-IDF Keyword Similarity <span style="font-size:11px;background:rgba(99,102,241,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#A5B4FC;">30% Weight</span></div>
+            <div class="metric-value" style="font-size:1.6rem;color:#A5B4FC;">{result.get("tfidf_similarity_score", "—")}%</div>
+            <div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Exact keyword frequency overlap</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -457,11 +437,11 @@ if analyze_button:
     with col_semantic:
         st.markdown(
             f"""
-        <div class="metric-card" style="background:linear-gradient(135deg,rgba(30,58,47,0.7),rgba(16,185,129,0.15));border:1px solid rgba(16,185,129,0.35);">
+        <div class="metric-card" style="border-top:3px solid #10B981;">
             <div class="metric-icon">🔮</div>
-            <div class="metric-label">Semantic Embedding Similarity <span style="font-size:11px;background:rgba(16,185,129,0.25);padding:2px 8px;border-radius:10px;margin-left:6px;color:#6EE7B7;">70% Weight</span></div>
-            <div class="metric-value" style="font-size:1.8rem;color:#6EE7B7;">{result.get("semantic_similarity_score", "—")}%</div>
-            <div style="font-size:0.75rem;color:#94A3B8;margin-top:6px;">Dense vector embeddings (all-MiniLM-L6-v2)</div>
+            <div class="metric-label">Semantic Embedding Similarity <span style="font-size:11px;background:rgba(16,185,129,0.2);padding:2px 8px;border-radius:10px;margin-left:6px;color:#6EE7B7;">70% Weight</span></div>
+            <div class="metric-value" style="font-size:1.6rem;color:#6EE7B7;">{result.get("semantic_similarity_score", "—")}%</div>
+            <div style="font-size:0.75rem;color:#94A3B8;margin-top:4px;">Dense vector embeddings (all-MiniLM-L6-v2)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -475,7 +455,7 @@ if analyze_button:
     <div class="section-card" style="padding-bottom:8px;">
         <div class="section-header">
             <span class="icon">📈</span>
-            <h3>Comprehensive Score Overview</h3>
+            <h3>Score Overview</h3>
         </div>
     </div>
     """,
@@ -515,9 +495,9 @@ if analyze_button:
         text="Score",
         color="Type",
         color_discrete_map={
-            "Overall": "#6366F1",
-            "NLP Breakdown": "#38BDF8",
-            "Combined NLP": "#8B5CF6",
+            "Overall": "#4F46E5",
+            "NLP Breakdown": "#0EA5E9",
+            "Combined NLP": "#7C3AED",
             "Skill Match": "#10B981",
         },
     )
@@ -528,7 +508,7 @@ if analyze_button:
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#94A3B8", family="Plus Jakarta Sans"),
-        height=400,
+        height=380,
         yaxis_range=[0, 115],
         margin=dict(l=20, r=20, t=30, b=20),
         legend_title_text="Metric Type",
@@ -544,7 +524,7 @@ if analyze_button:
     <div class="section-card" style="padding-bottom:8px;">
         <div class="section-header">
             <span class="icon">🎯</span>
-            <h3>Skills Gap Analysis</h3>
+            <h3>Skills Analysis</h3>
         </div>
     </div>
     """,
@@ -565,9 +545,9 @@ if analyze_button:
                 f'<span class="skill-chip matched">✔ {skill}</span>'
                 for skill in matched_list
             )
-            st.markdown(f'<div style="padding:10px 0;">{chips_html}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="padding:8px 0;">{chips_html}</div>', unsafe_allow_html=True)
         else:
-            st.info("No matching skills detected between resume and JD.")
+            st.info("No matching skills detected.")
 
     with tab_x:
         if missing_list:
@@ -575,9 +555,9 @@ if analyze_button:
                 f'<span class="skill-chip missing">✘ {skill}</span>'
                 for skill in missing_list
             )
-            st.markdown(f'<div style="padding:10px 0;">{chips_html}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="padding:8px 0;">{chips_html}</div>', unsafe_allow_html=True)
         else:
-            st.success("Candidate possesses 100% of required job skills!")
+            st.success("Candidate matches 100% of required job skills.")
 
     st.markdown("")
 
@@ -595,18 +575,18 @@ if analyze_button:
     is_llm = bool(suggestions and isinstance(suggestions[0], dict))
     if is_llm:
         source_label = "🤖 Feedback Agent (LLM)" if use_crew else "🤖 LLM-Generated Feedback"
-        badge_style = "color:#34D399;background:rgba(16,185,129,0.12);padding:3px 12px;border-radius:12px;border:1px solid rgba(16,185,129,0.3);"
+        badge_style = "color:#34D399;background:rgba(16,185,129,0.12);padding:3px 10px;border-radius:12px;border:1px solid rgba(16,185,129,0.3);"
     else:
         source_label = "📋 Rule-Based Fallback" if use_crew else "📋 Rule-Based Feedback"
-        badge_style = "color:#F59E0B;background:rgba(245,158,11,0.12);padding:3px 12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);"
+        badge_style = "color:#F59E0B;background:rgba(245,158,11,0.12);padding:3px 10px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);"
 
     st.markdown(
         f"""
     <div class="section-card" style="padding-bottom:8px;">
         <div class="section-header">
             <span class="icon">💡</span>
-            <h3>Resume Improvement Suggestions
-                <span style="font-size:0.75rem;font-weight:600;margin-left:12px;{badge_style}">
+            <h3>Improvement Suggestions
+                <span style="font-size:0.75rem;font-weight:600;margin-left:10px;{badge_style}">
                     {source_label}
                 </span>
             </h3>
@@ -623,7 +603,7 @@ if analyze_button:
                 detail = suggestion.get("detail", "")
                 st.markdown(
                     f"""
-                <div class="suggestion-item" style="animation-delay: {idx * 0.08}s;">
+                <div class="suggestion-item">
                     <div class="suggestion-num">{idx}</div>
                     <div class="suggestion-text">
                         <strong>{title}</strong><br>{detail}
@@ -635,7 +615,7 @@ if analyze_button:
             else:
                 st.markdown(
                     f"""
-                <div class="suggestion-item" style="animation-delay: {idx * 0.08}s;">
+                <div class="suggestion-item">
                     <div class="suggestion-num">{idx}</div>
                     <div class="suggestion-text">{suggestion}</div>
                 </div>
@@ -643,7 +623,7 @@ if analyze_button:
                     unsafe_allow_html=True,
                 )
     else:
-        st.success("Your resume is exceptionally well optimized for this role!")
+        st.success("Your resume is well optimized for this role.")
 
     st.markdown("")
 
@@ -652,8 +632,8 @@ if analyze_button:
         """
     <div class="download-cta">
         <div class="cta-icon">📄</div>
-        <div class="cta-title">Export Candidate ATS Report</div>
-        <div class="cta-desc">Download a comprehensive, recruiter-ready PDF report of this analysis</div>
+        <div class="cta-title">Download Resume Report</div>
+        <div class="cta-desc">Get a detailed PDF analysis of your resume and ATS fit</div>
     </div>
     """,
         unsafe_allow_html=True,
@@ -662,7 +642,7 @@ if analyze_button:
     report = generate_report(result)
 
     st.download_button(
-        label="⬇ Download ATS PDF Report",
+        label="⬇ Download PDF Report",
         data=report,
         file_name="Resume_Analysis_Report.pdf",
         mime="application/pdf",
@@ -671,92 +651,26 @@ if analyze_button:
 
 else:
     # =====================================================
-    # DEFAULT LANDING / WELCOME DASHBOARD VIEW
+    # DEFAULT LANDING STATE (Clean & Minimal)
     # =====================================================
-    hero_image_tag = (
-        f'<img src="{hero_banner_b64}" style="width:100%;border-radius:18px;margin-bottom:24px;box-shadow:0 12px 36px rgba(0,0,0,0.5);border:1px solid rgba(99,102,241,0.25);" alt="Dashboard Banner" />'
-        if hero_banner_b64
-        else ""
-    )
-
     st.markdown(
         f"""
-    <div class="welcome-hero-card">
-        {hero_image_tag}
-        <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-            <span class="stat-pill">✨ 68 Technical Skills Supported</span>
-            <span class="stat-pill">🧠 70% Semantic &amp; 30% TF-IDF Scoring</span>
-            <span class="stat-pill">🤖 3-Agent CrewAI Architecture</span>
-            <span class="stat-pill">⚡ Real-time ATS Evaluation</span>
+    <div class="landing-card">
+        <div class="landing-icon-box">{DOC_ICON_LARGE}</div>
+        <div class="landing-title">Ready for Resume Screening</div>
+        <div class="landing-desc">
+            Upload candidate resumes on the left sidebar, paste the target job description, and click <strong>🚀 Analyze Resume</strong> to evaluate ATS match scores and skill gaps.
         </div>
-        <div style="text-align:center;max-width:720px;margin:0 auto;color:#94A3B8;font-size:15px;line-height:1.6;">
-            Upload your candidate resumes on the left sidebar, paste your target job description, and click <strong>🚀 Analyze Resume</strong> to receive instant ATS compatibility scores, skill gaps, and AI coaching.
+        <div>
+            <span class="landing-pill">✨ 68 Technical Skills</span>
+            <span class="landing-pill">🧠 70% Semantic + 30% TF-IDF</span>
+            <span class="landing-pill">🤖 Optional CrewAI Pipeline</span>
+            <span class="landing-pill">📄 PDF Report Export</span>
         </div>
     </div>
     """,
         unsafe_allow_html=True,
     )
-
-    # 4 Feature Cards
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown(
-            """
-        <div class="welcome-feature-card">
-            <div class="welcome-feature-icon">🧠</div>
-            <div class="welcome-feature-title">Dual NLP Matching Engine</div>
-            <div class="welcome-feature-desc">
-                Combines keyword TF-IDF frequency (30%) with Sentence-Transformer dense embeddings (70%) to evaluate both keyword presence and deep semantic context.
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown("")
-
-        st.markdown(
-            """
-        <div class="welcome-feature-card">
-            <div class="welcome-feature-icon">🤖</div>
-            <div class="welcome-feature-title">CrewAI Multi-Agent Pipeline</div>
-            <div class="welcome-feature-desc">
-                Orchestrates Extraction, Matching, and Feedback Agents in a sequential pipeline to autonomously parse text, calculate fit, and synthesize actionable feedback.
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-    with col2:
-        st.markdown(
-            """
-        <div class="welcome-feature-card">
-            <div class="welcome-feature-icon">🎯</div>
-            <div class="welcome-feature-title">Skill Extraction &amp; Gap Detection</div>
-            <div class="welcome-feature-desc">
-                Accurately detects skills across hyphenated, punctuated, and multi-word variations with intelligent normalization and zero false positives.
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown("")
-
-        st.markdown(
-            """
-        <div class="welcome-feature-card">
-            <div class="welcome-feature-icon">🏆</div>
-            <div class="welcome-feature-title">Multi-Resume Ranking &amp; PDF Export</div>
-            <div class="welcome-feature-desc">
-                Process batches of candidate resumes simultaneously, automatically rank by ATS compatibility, and download recruiter-ready PDF reports.
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
 
 
 # =====================================================
@@ -769,11 +683,10 @@ st.markdown(
     <div class="footer-title">🚀 AI Resume Screening System</div>
     <div class="footer-tech">
         <span class="tech-badge">🐍 Python</span>
-        <span class="tech-badge">🧠 Sentence-Transformers</span>
+        <span class="tech-badge">🧠 NLP &amp; Embeddings</span>
         <span class="tech-badge">🤖 CrewAI Agents</span>
-        <span class="tech-badge">💬 LLM Coaching</span>
-        <span class="tech-badge">📄 PDF ReportLab</span>
-        <span class="tech-badge">🎨 Streamlit Glassmorphism</span>
+        <span class="tech-badge">💬 LLM Suggestions</span>
+        <span class="tech-badge">📄 ReportLab</span>
     </div>
 </div>
 """,
