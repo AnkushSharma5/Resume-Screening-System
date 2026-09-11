@@ -16,12 +16,13 @@ except LookupError:
     nltk.download("wordnet")
     lemmatizer = WordNetLemmatizer()
 
+
 def preprocess_text(text):
     """
     Cleans and preprocesses resume text.
     """
     text = text.lower()
-    text = re.sub(r"[^\w\s]", "", text)
+    text = re.sub(r"[^\w\s]", " ", text)
     text = re.sub(r"\d+", "", text)
     text = re.sub(r"\s+", " ", text).strip()
     tokens = text.split()

@@ -1,4 +1,3 @@
-from ast import Add
 from utils.pdf_reader import extract_text_from_pdf
 from utils.preprocessing import preprocess_text
 from utils.skill_extractor import extract_skills
@@ -13,9 +12,9 @@ def analyze_resume(pdf_file, job_description):
     Computes:
     - TF-IDF similarity (keyword overlap)
     - Semantic similarity (sentence-transformer embeddings)
-    - Combined similarity (average of both)
+    - Combined similarity (70% Semantic + 30% TF-IDF)
     - Skill match score
-    - Weighted overall ATS score
+    - Weighted overall ATS score (70% Combined Similarity + 30% Skill Match)
 
     Returns a result dict with both individual and combined scores so
     the UI can display all three side by side.
@@ -33,8 +32,8 @@ def analyze_resume(pdf_file, job_description):
     tfidf_score = calculate_similarity(clean_resume, clean_jd)
     semantic_score = calculate_semantic_similarity(clean_resume, clean_jd)
 
-    # Combined: equal-weight average of TF-IDF and semantic
-    combined_similarity = round((tfidf_score + semantic_score) / 2, 2)
+    # Combined: 70% Semantic Similarity + 30% TF-IDF Similarity
+    combined_similarity = round((0.70 * semantic_score) + (0.30 * tfidf_score), 2)
 
     skill_score, matched, missing = calculate_skill_match(
         resume_skills,
@@ -49,7 +48,7 @@ def analyze_resume(pdf_file, job_description):
 
     return {
         "score": overall_score,
-        # Combined similarity (used for overall ATS score)
+        # Combined similarity (70% semantic + 30% tf-idf, used for overall ATS score)
         "similarity_score": combined_similarity,
         # Individual technique scores — shown separately in the UI
         "tfidf_similarity_score": tfidf_score,

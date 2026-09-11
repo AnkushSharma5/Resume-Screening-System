@@ -160,7 +160,7 @@ Resumes are scored against the job description using **two complementary NLP tec
 | **TF-IDF Similarity** | Keyword frequency vectors + cosine similarity | Catches exact keyword overlap |
 | **Semantic Similarity** | `all-MiniLM-L6-v2` sentence embeddings + cosine similarity | Catches meaning matches even without exact keywords |
 
-Both scores are averaged into a **Combined Similarity** score, then weighted with Skill Match (`0.7 × similarity + 0.3 × skill_score`) to produce the final ATS score.
+Both scores are weighted into a **Combined Similarity** score (`0.70 × semantic + 0.30 × tfidf`), then combined with Skill Match (`0.7 × similarity + 0.3 × skill_score`) to produce the final ATS score.
 
 ## 3-Agent CrewAI Pipeline
 

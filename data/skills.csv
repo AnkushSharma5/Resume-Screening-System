@@ -1,25 +1,69 @@
 skill
-python
-java
-c
-c++
-sql
-mysql
-machine learning
-deep learning
-data analysis
-power bi
-tableau
-excel
-git
-github
-docker
-kubernetes
+agentic ai
+angular
+ansible
 aws
 azure
-tensorflow
-pytorch
-scikit-learn
-pandas
+bigquery
+c
+c#
+c++
+ci/cd
+crewai
+css
+data analysis
+deep learning
+devops
+django
+docker
+duckdb
+elasticsearch
+excel
+express
+fastapi
+flask
+gcp
+git
+github
+graphql
+hadoop
+html
+huggingface
+java
+javascript
+jwt
+kafka
+kubernetes
+langchain
+linux
+llm
+machine learning
+mongodb
+mysql
+next.js
+nlp
+node.js
+nosql
 numpy
+oracle
+pandas
+pl/sql
+postgresql
+power bi
+prompt engineering
+python
+pytorch
+r
+rag
+react
+redis
+rest
+scikit-learn
+snowflake
+spark
+spring boot
+sql
 streamlit
+tableau
+tensorflow
+typescript

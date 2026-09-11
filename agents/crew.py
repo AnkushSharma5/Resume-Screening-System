@@ -170,7 +170,7 @@ def _matching_tool(job_description: str) -> str:
 
     tfidf_score = calculate_similarity(clean_resume, clean_jd)
     semantic_score = calculate_semantic_similarity(clean_resume, clean_jd)
-    combined_similarity = round((tfidf_score + semantic_score) / 2, 2)
+    combined_similarity = round((0.70 * semantic_score) + (0.30 * tfidf_score), 2)
 
     skill_score, matched, missing = calculate_skill_match(resume_skills, jd_skills)
     overall_score = round((0.7 * combined_similarity) + (0.3 * skill_score), 2)
